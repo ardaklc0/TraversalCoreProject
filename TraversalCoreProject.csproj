@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
-    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj" />
+    <ProjectReference Include="..\TraversalCoreProject\BusinessLayer\BusinessLayer.csproj" />
+    <ProjectReference Include="..\TraversalCoreProject\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\TraversalCoreProject\EntityLayer\EntityLayer.csproj" />
   </ItemGroup>
 
 </Project>
