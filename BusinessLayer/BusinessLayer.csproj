@@ -27,6 +27,9 @@
   <ItemGroup>
     <Folder Include="Abstract\" />
     <Folder Include="Concrete\" />
+    <Folder Include="Abstract\" />
+    <Folder Include="Concrete\" />
+    <Folder Include="ValidationRules\" />
     <Folder Include="ValidationRules\" />
   </ItemGroup>
 
