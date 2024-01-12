@@ -12,10 +12,10 @@ namespace BusinessLayer.ValidationRules
     {
         public FirstAboutValidator()
         {
-            RuleFor(x => x.Description).NotEmpty().WithMessage("Açıklama kısmı boş olamaz!");
-            RuleFor(x => x.FirstImage).NotEmpty().WithMessage("Lütfen görsel seçiniz!");
-            RuleFor(x => x.Description).MinimumLength(50).WithMessage("Lütfen en az 50 karakter girin!");
-            RuleFor(x => x.Description).MaximumLength(1500).WithMessage("Lütfen açıklamayı kısaltın!");
+            RuleFor(x => x.Description).NotEmpty().WithMessage("Description cannot be empty!");
+            RuleFor(x => x.FirstImage).NotEmpty().WithMessage("Please choose an image!");
+            RuleFor(x => x.Description).MinimumLength(50).WithMessage("Please enter at least 50 character!");
+            RuleFor(x => x.Description).MaximumLength(1500).WithMessage("Please enter at most 1500 character!");
         }
     }
 }
