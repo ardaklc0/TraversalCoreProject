@@ -9,8 +9,7 @@ namespace TraversalCoreProject.ViewComponents.Default
         FirstFeatureManager firstFeatureManager = new FirstFeatureManager(new EFFirstFeatureDal());
         public IViewComponentResult Invoke()
         {
-            var values = firstFeatureManager.TGetList();
-            return View(values);
+            return View();
         }
     }
 }
