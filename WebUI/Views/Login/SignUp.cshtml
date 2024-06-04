@@ -9,11 +9,7 @@
 		<meta charset="utf-8">
 		<title>Traversal Misafir Kayıt Ekranı</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-		<!-- LINEARICONS -->
 	<link rel="stylesheet" href="~/colorlib-regform-26/fonts/linearicons/style.css">
-		
-		<!-- STYLE CSS -->
 	<link rel="stylesheet" href="~/colorlib-regform-26/css/style.css">
 	</head>
 
@@ -21,40 +17,36 @@
 
 		<div class="wrapper">
 			<div class="inner">
-				<form action="">
+				<form method="post">
 					<h3>Yeni Hesap Oluşturun</h3>
 					<div class="form-holder">
 						<span class="lnr lnr-user"></span>
-						<input type="text" class="form-control" placeholder="Adınız">
+						<input type="text" class="form-control" placeholder="Adınız" name="Name">
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-user"></span>
-						<input type="text" class="form-control" placeholder="Soyadınız">
+						<input type="text" class="form-control" placeholder="Soyadınız" name="Surname">
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-envelope"></span>
-						<input type="text" class="form-control" placeholder="Mail Adresiniz">
+						<input type="text" class="form-control" placeholder="Mail Adresiniz" name="Mail">
 					</div>
 					<div class="form-holder">
 					<span class="lnr lnr-phone-handset"></span>
-						<input type="text" class="form-control" placeholder="Telefon Numaranız">
+						<input type="text" class="form-control" placeholder="Kullanıcı Adınız" name="Username">
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-lock"></span>
-						<input type="password" class="form-control" placeholder="Şifreniz">
+						<input type="password" class="form-control" placeholder="Şifreniz" name="Password">
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-lock"></span>
-						<input type="password" class="form-control" placeholder="Şifrenizi Tekrar Girin">
+					<input type="password" class="form-control" placeholder="Şifrenizi Tekrar Girin" name="ConfirmPassword">
 					</div>
 					<button>
 						<span>Kayıt Ol</span>
 					</button>
-					<button asp-action="SignIn" asp-controller="Login">
-						<span>
-							Giriş Yap
-						</span>
-					</button>
+
 				</form>
 			</div>
 			

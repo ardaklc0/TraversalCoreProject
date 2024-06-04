@@ -1,21 +1,53 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TraversalCoreProject.Models;
 
 namespace TraversalCoreProject.Controllers
 {
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        [HttpGet]
+        private readonly UserManager<AppUser> _userManager;
+		public LoginController(UserManager<AppUser> userManager)
+		{
+			_userManager = userManager;
+		}
+
+		[HttpGet]
         public IActionResult SignUp()
         {
             return View();
         }
-        //[HttpPost]
-        //public IActionResult SignUp()
-        //{
-        //    return RedirectToAction("Index", "Destination");
-        //}
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(UserRegisterViewModel user)
+        {
+            AppUser appUser = new AppUser
+            {
+				Name = user.Name,
+				Surname = user.Surname,
+				UserName = user.Username,
+				Email = user.Mail,
+			};
+            if (user.Password == user.ConfirmPassword)
+            {
+                var result = await _userManager.CreateAsync(appUser, user.Password);
+                if (result.Succeeded)
+                {
+					return RedirectToAction("SignIn");
+				}
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+						ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+            return View(user);
+        }
 
         [HttpGet]
         public IActionResult SignIn()
