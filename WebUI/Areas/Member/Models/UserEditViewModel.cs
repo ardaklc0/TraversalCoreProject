@@ -9,6 +9,6 @@
         public string PhoneNumber{ get; set; }
         public string Mail { get; set; }
         public string? ImageURL { get; set; }
-
+        public IFormFile Image { get; set; }
     }
 }
