@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -12,15 +13,33 @@ namespace TraversalCoreProject.Areas.Member.Controllers
         DestinationManager destinationManager = new DestinationManager(new EFDestinationDal());
         ReservationManager reservationManager = new ReservationManager(new EFReservationDal());
 
-        [HttpGet]
-        public IActionResult MyCurrentReservations()
+        private readonly UserManager<AppUser> _userManager;
+        public ReservationController(UserManager<AppUser> userManager)
         {
-            return View();
+            _userManager = userManager;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyCurrentReservations()
+        {
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            var reservations = reservationManager.GetListWithReservationByAccepted(values.Id);
+            return View(reservations);
         }
         [HttpGet]
-        public IActionResult MyOldReservations()
+        public async Task<IActionResult> MyOldReservations()
         {
-            return View();
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            var reservations = reservationManager.GetListWithReservationByPrevious(values.Id);
+            return View(reservations);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyApprovalReservations()
+        {       
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            var reservations = reservationManager.GetListWithReservationByWaitApproval(values.Id);
+            return View(reservations);
         }
 
         [HttpGet]
@@ -38,7 +57,8 @@ namespace TraversalCoreProject.Areas.Member.Controllers
         [HttpPost]
         public IActionResult NewReservation(Reservation p)
         {
-            p.AppUserId = 3;
+            p.AppUserId = 4;
+            p.Status = "Onay Bekliyor";
             reservationManager.TAdd(p);
             return RedirectToAction("MyCurrentReservations");
         }
