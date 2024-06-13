@@ -45,7 +45,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Default}/{action=Index}");
+    pattern: "{controller=Login}/{action=SignIn}");
 
 app.UseEndpoints(endpoints =>
 {
