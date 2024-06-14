@@ -21,7 +21,7 @@ namespace TraversalCoreProject.Controllers
             return View(values);
         }
         [HttpPost]
-        public IActionResult DestinationDetail(Destination p) 
+        public IActionResult DestinationDetails(Destination p) 
         {
             return View();
         }
