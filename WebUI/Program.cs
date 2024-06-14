@@ -43,9 +43,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+// Burada /{id?} olmasý routing yaparken DestinationDetails/1 gibi bir url girildiðinde 1'i id olarak alýr. Aksi halinde sadece DestinationDetails?=1 çalýþýr.
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=SignIn}");
+    pattern: "{controller=Login}/{action=SignIn}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {
