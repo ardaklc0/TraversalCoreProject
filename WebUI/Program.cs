@@ -1,5 +1,6 @@
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.Container;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
@@ -19,14 +20,7 @@ builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>()
     .AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
 
-builder.Services.AddScoped<ICommentService, CommentManager>();
-builder.Services.AddScoped<ICommentDal, EFCommentDal>();
-
-builder.Services.AddScoped<IDestinationService, DestinationManager>();
-builder.Services.AddScoped<IDestinationDal, EFDestinationDal>();
-
-builder.Services.AddScoped<IAppUserService, AppUserManager>();
-builder.Services.AddScoped<IAppUserDal, EFAppUserDal>();
+builder.Services.AddDependencyResolvers();
 
 // Authorization in the application
 builder.Services.AddMvc(config =>
@@ -47,6 +41,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithReExecute("/Error/Error404", "?code={0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
