@@ -8,6 +8,7 @@ using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using TraversalCoreProject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddDbContext<Context>();
+// Add logging services
+builder.Services.AddLogging(x => { 
+    x.ClearProviders();
+    // Start from Debug
+    x.SetMinimumLevel(LogLevel.Debug);
+    x.AddDebug();
+});
 // Add identity to application.
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>()
     .AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
@@ -33,6 +41,13 @@ builder.Services.AddMvc(config =>
 builder.Services.AddMvc();
 
 var app = builder.Build();
+
+// Configuring the LoggingFactory
+var lf = app.Services.GetRequiredService<ILoggerFactory>();
+var path = Directory.GetCurrentDirectory();
+lf.AddFile($"{path}/Logs/log.txt");
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

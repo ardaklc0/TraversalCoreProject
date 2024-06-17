@@ -18,7 +18,7 @@ namespace BusinessLayer.Concrete
         }
         public void TAdd(Guide entity)
         {
-            throw new NotImplementedException();
+            _guideDal.Insert(entity);
         }
 
         public void TDelete(Guide entity)
