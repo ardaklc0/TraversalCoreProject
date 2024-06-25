@@ -12,10 +12,10 @@ namespace BusinessLayer.ValidationRules
     {
         public GuideValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Name cannot be empty");
-            RuleFor(x => x.Description).NotEmpty().WithMessage("Description cannot be empty");
-            RuleFor(x => x.Image).NotEmpty().WithMessage("Image cannot be empty");
-            RuleFor(x => x.Name).MinimumLength(10).WithMessage("Name must be at least 10 characters");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Rehber ismi boş olamaz");
+            RuleFor(x => x.Description).NotEmpty().WithMessage("Açıklama boş olamaz");
+            RuleFor(x => x.Image).NotEmpty().WithMessage("Resim boş olamaz");
+            RuleFor(x => x.Name).MinimumLength(10).WithMessage("İsim en az 10 karakter olmalıdır");
         }
     }
 }

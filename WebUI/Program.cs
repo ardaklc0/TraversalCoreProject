@@ -1,10 +1,12 @@
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.Container;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +16,13 @@ using TraversalCoreProject.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+    {
+        options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+    }
+);
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+
 // Add services to the container.
 builder.Services.AddDbContext<Context>();
 // Add logging services
@@ -67,16 +75,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 // Burada /{id?} olmasý routing yaparken DestinationDetails/1 gibi bir url girildiðinde 1'i id olarak alýr. Aksi halinde sadece DestinationDetails?=1 çalýþýr.
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Login}/{action=SignIn}/{id?}");
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Login}/{action=SignIn}/{id?}");
 });
 
 app.Run();

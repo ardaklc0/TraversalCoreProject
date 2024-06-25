@@ -1,4 +1,5 @@
-﻿using ClosedXML.Excel;
+﻿using BusinessLayer.Abstract;
+using ClosedXML.Excel;
 using DataAccessLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
@@ -9,6 +10,11 @@ namespace TraversalCoreProject.Controllers
 {
     public class ExcelController : Controller
     {
+        private readonly IExcelService excelService;
+        public ExcelController(IExcelService excelService)
+        {
+            this.excelService = excelService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -32,23 +38,9 @@ namespace TraversalCoreProject.Controllers
 
         public IActionResult StaticExcelReport()
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            ExcelPackage excelPackage = new ExcelPackage();
-            var ws = excelPackage.Workbook.Worksheets.Add("Sheet1");
-            ws.Cells[1, 1].Value = "Rota";
-            ws.Cells[1, 2].Value = "Rehber";
-            ws.Cells[1, 3].Value = "Kontenjan";
-
-            ws.Cells[2, 1].Value = "İstanbul";
-            ws.Cells[2, 2].Value = "Ahmet";
-            ws.Cells[2, 3].Value = "50";
-
-            ws.Cells[3, 1].Value = "Sırbistan";
-            ws.Cells[3, 2].Value = "Zeynep";
-            ws.Cells[3, 3].Value = "30";
-
-            var bytes = excelPackage.GetAsByteArray();
-            return File(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Rota.xlsx");
+            return File(excelService.ExcelList(GetDestinationModels()), 
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
+                "Destinations.xlsx");
         }
 
         public IActionResult DestinationExcelReport()
