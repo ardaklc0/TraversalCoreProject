@@ -14,7 +14,6 @@ namespace TraversalCoreProject.Areas.Admin.Controllers
         {
             _guideService = guideService;
         }
-
         public IActionResult Index()
         {
             var values = _guideService.TGetList();
@@ -38,13 +37,15 @@ namespace TraversalCoreProject.Areas.Admin.Controllers
                 _guideService.TAdd(guide);
                 return RedirectToAction("Index");
             }
-            foreach (var item in result.Errors)
+            else
             {
-                ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View();
             }
-            return View();
         }
-
         [HttpGet]
         public IActionResult EditGuide(int id)
         {
@@ -56,23 +57,17 @@ namespace TraversalCoreProject.Areas.Admin.Controllers
         public IActionResult EditGuide(Guide guide)
         {
             _guideService.TUpdate(guide);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Guide", new { area = "Admin" });
         }
-        
         public IActionResult ChangeToTrue(int id)
         {
-            var value = _guideService.TGetById(id);
-            value.Status = true;
-            _guideService.TUpdate(value);
-            return RedirectToAction("Index");
+            _guideService.TChangeToTrueByGuide(id);
+            return RedirectToAction("Index", "Guide", new { area = "Admin" });
         }
-
         public IActionResult ChangeToFalse(int id)
         {
-            var value = _guideService.TGetById(id);
-            value.Status = false;
-            _guideService.TUpdate(value);
-            return RedirectToAction("Index");
+            _guideService.TChangeToFalseByGuide(id);
+            return RedirectToAction("Index", "Guide", new { area = "Admin" });
         }
     }
 
