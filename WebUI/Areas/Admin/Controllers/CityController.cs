@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLayer.Abstract;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TraversalCoreProject.Models;
 
@@ -7,6 +9,11 @@ namespace TraversalCoreProject.Areas.Admin.Controllers
     [Area("Admin")]
     public class CityController : Controller
     {
+        private readonly IDestinationService destinationService;
+        public CityController(IDestinationService destinationService)
+        {
+            this.destinationService = destinationService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -14,7 +21,7 @@ namespace TraversalCoreProject.Areas.Admin.Controllers
 
         public IActionResult CityList()
         {
-            var jsonCity = JsonConvert.SerializeObject(cities);
+            var jsonCity = JsonConvert.SerializeObject(destinationService.TGetList());
             return Json(jsonCity);
         }
 
@@ -26,5 +33,26 @@ namespace TraversalCoreProject.Areas.Admin.Controllers
             new CityClassViewModel { Id = 4, Name = "Paris", Country = "France" },
             new CityClassViewModel { Id = 5, Name = "Berlin", Country = "Germany" }
         };
+
+        [HttpPost]
+        public IActionResult AddCityDestination(Destination destination)
+        {
+            destinationService.TAdd(destination);
+            var values = JsonConvert.SerializeObject(destination); 
+            return Json(values);
+        }
+
+        public IActionResult GetById(int id)
+        {
+
+            var destinationValues = destinationService.TGetById(id);
+            if (destinationValues == null)
+            {
+                return Json(new { message = "\"Böyle bir şehir yok\"" });
+            }
+            var jsonValues = JsonConvert.SerializeObject(destinationValues);
+            return Json(jsonValues);
+            
+        }
     }
 }
