@@ -15,12 +15,28 @@
 
 
 <div id="cityList">
-    Buraya Şehir Gelecek
+    <h4>Buraya Şehir Gelecek</h4>
 </div>
 <br />
 
 <div>
     <input type="text" class="form-control" id="txtId" placeholder="Şehir ID" />
+</div>
+<br />
+<div id="cityList">
+    <h4>Silme İşlemleri</h4>
+</div>
+<br />
+<div>
+    <input type="text" class="form-control" id="txtDeleteId" placeholder="Silinecek Şehir ID" />
+</div>
+<br />
+<div>
+    <input type="text" class="form-control" id="txtEditId" placeholder="Güncellenecek Şehir ID" />
+    <br />
+    <input type="text" class="form-control" id="txtEditCity" placeholder="Şehir Adı" />
+    <br />
+    <input type="text" class="form-control" id="txtEditDayNight" placeholder="Gün - Gece" />
 </div>
 <br />
 <div id="destinationListById" >
@@ -104,6 +120,35 @@
                 console.log(message);
                 alert(message);
             }
+        });
+    });
+
+    $('#btnDelete').click(x => { 
+        let id = $('#txtDeleteId').val();
+        $.ajax({
+            url: '/Admin/City/DeleteCity/' + id,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            success: function (func3) {
+                alert("Şehir - Rota Başarılı Bir Şekilde Silindi!");
+            },
+        });
+    });
+
+    $('#btnUpdate').click(x => { 
+        let values = {
+            Id: $('#txtEditId').val(),
+            City: $('#txtEditCity').val(),
+            DayNight: $('#txtEditDayNight').val()
+        };
+        $.ajax({
+            url: '/Admin/City/UpdateCity/',
+            type: 'POST',
+            data: values,
+            success: function (func4) {
+                alert("Şehir - Rota Başarılı Bir Şekilde Güncellendi!");
+            },
         });
     });
 </script>
