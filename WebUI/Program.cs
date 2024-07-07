@@ -5,7 +5,9 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using DTOLayer.DTOs.AnnouncementDTOs;
 using EntityLayer.Concrete;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -37,6 +39,10 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Contex
     .AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
 
 builder.Services.AddDependencyResolvers();
+
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddTransient<IValidator<AnnouncementAddDTOs>, AnnouncementAddValidator>();
+
 
 // Authorization in the application
 builder.Services.AddMvc(config =>
