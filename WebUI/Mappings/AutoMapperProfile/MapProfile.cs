@@ -8,7 +8,9 @@ namespace TraversalCoreProject.Mappings.AutoMapperProfile
     {
         public MapProfile()
         {
-            CreateMap<AnnouncementAddDTOs, Announcement>().ReverseMap();
+            CreateMap<AnnouncementAddDTO, Announcement>().ReverseMap();
+            CreateMap<AnnouncementListDTO, Announcement>().ReverseMap();
+            CreateMap<AnnouncementUpdateDTO, Announcement>().ReverseMap();
             CreateMap<AppUserRegisterDTOs, AppUser>().ReverseMap();
             CreateMap<AppUserLoginDTOs, AppUser>().ReverseMap();
         }
